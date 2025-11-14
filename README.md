@@ -52,7 +52,6 @@ To safely connect CMOS and RS-232, the **MAX232** performs:
 ---
 
 ## 🧪 Loopback Test Performed (Hardware Measurement)
-
 This project validates MAX232 functionality **without** using a computer or UART code.  
 Instead, the test uses a **square pulse as input** and verifies both conversion directions on the oscilloscope.
 
@@ -72,3 +71,57 @@ This confirms the **charge pump** and line driver stages are functioning.
 
 The output RS-232 signal was internally looped back through the MAX232:
 
+T1OUT → R1IN → R1OUT
+
+On the oscilloscope:
+- **R1OUT** reproduced the original square wave  
+- Correct **CMOS voltage range**: 0–5 V  
+- Correct **polarity restoration** (inversion reversed)
+
+This verifies the receiver and level-shifting path.
+
+---
+
+## 📸 Photos & Oscilloscope Screenshots
+
+### **Breadboard Setup**
+
+<img width="527" height="614" alt="Circuit_implementation" src="https://github.com/user-attachments/assets/4238f662-6368-44aa-8426-53f9546e6e80" />
+
+---
+
+### **Input Signal — T1IN (CMOS 0–5 V)**
+
+<img width="500" height="235" alt="cmos-signal" src="https://github.com/user-attachments/assets/a54338dd-313f-41a1-b598-b759d3a8a799" />
+
+---
+
+### **RS-232 Output — T1OUT / R1IN**  
+(Inversion + higher amplitude, used to form the loopback)
+
+![IMG_2425](https://github.com/user-attachments/assets/093a949c-71fa-4560-b102-71bed5edef83)
+
+
+---
+
+### **Loopback Output — R1OUT (Converted Back to CMOS)**
+
+<img width="965" height="702" alt="Loop_Bac_signal_in_R1_out" src="https://github.com/user-attachments/assets/99b40cc6-62de-4042-9b15-9144136fa56d" />
+
+
+---
+
+## ✔️ Conclusion
+
+The MAX232 successfully reproduced at **R1OUT** the same waveform injected at **T1IN**, confirming:
+
+- CMOS → RS-232 conversion works  
+- RS-232 → CMOS conversion works  
+- The internal loopback path is correct  
+- The device produces safe voltage levels suitable for FPGA UART pins  
+
+This verifies full MAX232 functionality **without** requiring a PC, UART code, or serial terminal.
+
+---
+
+  
